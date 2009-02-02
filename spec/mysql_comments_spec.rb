@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
-describe ActiveRecord, 'comments' do
+describe ActiveRecord::Comments, 'MySQL support' do
 
   # HELPERS
   
