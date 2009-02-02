@@ -8,6 +8,8 @@ if defined?(ActiveRecord)
   class ActiveRecord::Comments
   end
 
+  class ActiveRecord::Comments::UnsupportedDatabase < Exception; end
+
 end
 
 if defined?(ActiveRecord::Base) && defined?(ActiveRecord::ConnectionAdapters::Column)
