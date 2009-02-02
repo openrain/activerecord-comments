@@ -49,6 +49,46 @@ module ActiveRecord::Comments::BaseExt
       end
     end
 
+    # Get the database comment (if any) defined for a column
+    #
+    # ==== Parameters
+    # column<~to_s>::
+    #   The name of the column to get the comment for
+    #
+    # table<~to_s>::
+    #   The name of the table to get the column comment for, default is 
+    #   the #table_name of the ActiveRecord::Base class this is 
+    #   being called on, eg. +User.column_comment 'username'+
+    #
+    # ==== Returns
+    # String:: The comment for the given column (or nil if no comment)
+    #
+    # :api: public
+    def column_comment column, table = self.table_name
+      adapter = connection.adapter_name.downcase
+      database_specific_method_name = "#{ adapter }_column_comment"
+      
+      if self.respond_to? database_specific_method_name
+        send database_specific_method_name, column, table
+      else
+
+        # try requiring 'activerecord-comments/[name-of-adapter]_adapter'
+        begin
+
+          # see if there right method exists after requiring
+          require "activerecord-comments/#{ adapter }_adapter"
+          if self.respond_to? database_specific_method_name
+            send database_specific_method_name, column, table
+          else
+            raise ActiveRecord::Comments::UnsupportedDatabase.new("#{adapter} unsupported by ActiveRecord::Comments")
+          end
+
+        rescue LoadError
+          raise ActiveRecord::Comments::UnsupportedDatabase.new("#{adapter} unsupported by ActiveRecord::Comments")
+        end
+      end
+    end
+
     # Extends ActiveRecord::Base#columns, setting @table_name as an instance variable 
     # on each of the column instances that are returned
     #

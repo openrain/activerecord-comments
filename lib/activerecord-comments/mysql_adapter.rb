@@ -6,7 +6,8 @@ module ActiveRecord::Comments::MysqlAdapter
 
   module ClassMethods
 
-    def mysql_comment table = table_name
+    # MySQL implementation of ActiveRecord::Comments::BaseExt#comment
+    def mysql_comment table
       table_options = create_table_sql(table).split("\n").last
       if table_options =~ /COMMENT='/
         /COMMENT='(.*)'/.match(table_options).captures.first
@@ -15,11 +16,8 @@ module ActiveRecord::Comments::MysqlAdapter
       end
     end
 
-    def create_table_sql table = table_name
-      connection.execute("show create table `#{ table }`").all_hashes.first['Create Table']
-    end
-
-    def column_comment column, table = table_name
+    # MySQL implementation of ActiveRecord::Comments::BaseExt#column_comment
+    def mysql_column_comment column, table
       column_creation_sql = create_column_sql(column, table)
       if column_creation_sql =~ /COMMENT '/
         /COMMENT '(.*)'/.match(column_creation_sql).captures.first
@@ -28,6 +26,35 @@ module ActiveRecord::Comments::MysqlAdapter
       end
     end
 
+    private
+
+    # Returns the SQL used to create the given table
+    #
+    # ==== Parameters
+    # table<~to_s>::
+    #   The name of the table to get the 'CREATE TABLE' SQL for
+    #
+    # ==== Returns
+    # String:: the SQL used to create the table
+    #
+    # :api: private
+    def create_table_sql table = table_name
+      connection.execute("show create table `#{ table }`").all_hashes.first['Create Table']
+    end
+
+    # Returns the SQL used to create the given column for the given table
+    #
+    # ==== Parameters
+    # column<~to_s>::
+    #   The name of the column to get the creation SQL for
+    #
+    # table<~to_s>::
+    #   The name of the table to get the 'CREATE TABLE' SQL for
+    #
+    # ==== Returns
+    # String:: the SQL used to create the column
+    #
+    # :api: private
     def create_column_sql column, table = table_name
       full_table_create_sql = create_table_sql(table)
       parts = full_table_create_sql.split("\n")
