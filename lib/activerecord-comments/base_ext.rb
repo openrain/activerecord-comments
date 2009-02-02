@@ -29,7 +29,7 @@ module ActiveRecord::Comments::BaseExt
       database_specific_method_name = "#{ adapter }_comment"
       
       if self.respond_to? database_specific_method_name
-        send database_specific_method_name, table
+        send database_specific_method_name, table.to_s
       else
 
         # try requiring 'activerecord-comments/[name-of-adapter]_adapter'
@@ -38,7 +38,7 @@ module ActiveRecord::Comments::BaseExt
           # see if there right method exists after requiring
           require "activerecord-comments/#{ adapter }_adapter"
           if self.respond_to? database_specific_method_name
-            send database_specific_method_name, table
+            send database_specific_method_name, table.to_s
           else
             raise ActiveRecord::Comments::UnsupportedDatabase.new("#{adapter} unsupported by ActiveRecord::Comments")
           end
@@ -69,7 +69,7 @@ module ActiveRecord::Comments::BaseExt
       database_specific_method_name = "#{ adapter }_column_comment"
       
       if self.respond_to? database_specific_method_name
-        send database_specific_method_name, column, table
+        send database_specific_method_name, column.to_s, table.to_s
       else
 
         # try requiring 'activerecord-comments/[name-of-adapter]_adapter'
@@ -78,7 +78,7 @@ module ActiveRecord::Comments::BaseExt
           # see if there right method exists after requiring
           require "activerecord-comments/#{ adapter }_adapter"
           if self.respond_to? database_specific_method_name
-            send database_specific_method_name, column, table
+            send database_specific_method_name, column.to_s, table.to_s
           else
             raise ActiveRecord::Comments::UnsupportedDatabase.new("#{adapter} unsupported by ActiveRecord::Comments")
           end
