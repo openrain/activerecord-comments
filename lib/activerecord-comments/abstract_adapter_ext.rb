@@ -1,5 +1,13 @@
 module ActiveRecord::Comments::AbstractAdapterExt
 
+  def self.included base
+    puts "including abstract adapter extensions in #{ base.inspect }"
+
+    base.instance_eval {
+      alias_method_chain :columns, :table_name # this is evil!!!  how to fix?  column needs to know its table  :(
+    }
+  end
+
   # Get the database comment (if any) defined for a table
   #
   # ==== Parameters
@@ -71,6 +79,25 @@ module ActiveRecord::Comments::AbstractAdapterExt
         raise ActiveRecord::Comments::UnsupportedDatabase.new("#{adapter} unsupported by ActiveRecord::Comments")
       end
     end
+  end
+
+  # Extends #columns, setting @table_name as an instance variable 
+  # on each of the column instances that are returned
+  #
+  # ==== Returns
+  # Array[ActiveRecord::ConnectionAdapters::Column]::
+  #   Returns an Array of column objects, each with @table_name set
+  #
+  # :api: private
+  def columns_with_table_name *args
+    puts "\n\n HELLO ???? HELLO ????? \n\n"
+    puts "asking adapter for columns for #{ args.inspect }"
+    columns = columns_without_table_name *args
+    table = self.table_name # make table_name available as variable in instanve_eval closure
+    columns.each do |column|
+      column.instance_eval { @table_name = table }
+    end
+    columns
   end
 
 end
