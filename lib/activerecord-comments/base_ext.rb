@@ -14,6 +14,10 @@ module ActiveRecord::Comments::BaseExt
 
     # Get the database comment (if any) defined for a table
     #
+    # TODO instead of ActiveRecord::Base knowing howto do these things,
+    #      everything should call the connection (Adapter)! so both the 
+    #      model and the connection, itself, know howto do these things
+    #
     # ==== Parameters
     # table<~to_s>::
     #   The name of the table to get the comment for, default is 

@@ -12,14 +12,18 @@ if defined?(ActiveRecord)
 
 end
 
-if defined?(ActiveRecord::Base) && defined?(ActiveRecord::ConnectionAdapters::Column)
+if defined?(ActiveRecord::Base) && 
+   defined?(ActiveRecord::ConnectionAdapters::Column) && 
+   defined?(ActiveRecord::ConnectionAdapters::AbstractAdapter)
   
   # require and include our modules which add the 'comment' functionality to ActiveRecord
 
   require 'activerecord-comments/base_ext'
   require 'activerecord-comments/column_ext'
+  require 'activerecord-comments/abstract_adapter_ext'
 
-  ActiveRecord::Base.send                       :include, ActiveRecord::Comments::BaseExt
-  ActiveRecord::ConnectionAdapters::Column.send :include, ActiveRecord::Comments::ColumnExt
+  ActiveRecord::Base.send                                 :include, ActiveRecord::Comments::BaseExt
+  ActiveRecord::ConnectionAdapters::Column.send           :include, ActiveRecord::Comments::ColumnExt
+  ActiveRecord::ConnectionAdapters::AbstractAdapter.send  :include, ActiveRecord::Comments::AbstractAdapterExt
 
 end
