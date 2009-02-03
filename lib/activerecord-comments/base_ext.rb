@@ -14,10 +14,6 @@ module ActiveRecord::Comments::BaseExt
 
     # Get the database comment (if any) defined for a table
     #
-    # TODO instead of ActiveRecord::Base knowing howto do these things,
-    #      everything should call the connection (Adapter)! so both the 
-    #      model and the connection, itself, know howto do these things
-    #
     # ==== Parameters
     # table<~to_s>::
     #   The name of the table to get the comment for, default is 
@@ -29,31 +25,12 @@ module ActiveRecord::Comments::BaseExt
     #
     # :api: public
     def comment table = self.table_name
-      adapter = connection.adapter_name.downcase
-      database_specific_method_name = "#{ adapter }_comment"
-      
-      if self.respond_to? database_specific_method_name
-        send database_specific_method_name, table.to_s
-      else
-
-        # try requiring 'activerecord-comments/[name-of-adapter]_adapter'
-        begin
-
-          # see if there right method exists after requiring
-          require "activerecord-comments/#{ adapter }_adapter"
-          if self.respond_to? database_specific_method_name
-            send database_specific_method_name, table.to_s
-          else
-            raise ActiveRecord::Comments::UnsupportedDatabase.new("#{adapter} unsupported by ActiveRecord::Comments")
-          end
-
-        rescue LoadError
-          raise ActiveRecord::Comments::UnsupportedDatabase.new("#{adapter} unsupported by ActiveRecord::Comments")
-        end
-      end
+      connection.comment table
     end
 
     # Get the database comment (if any) defined for a column
+    #
+    # TODO move into adapter!
     #
     # ==== Parameters
     # column<~to_s>::
@@ -69,28 +46,7 @@ module ActiveRecord::Comments::BaseExt
     #
     # :api: public
     def column_comment column, table = self.table_name
-      adapter = connection.adapter_name.downcase
-      database_specific_method_name = "#{ adapter }_column_comment"
-      
-      if self.respond_to? database_specific_method_name
-        send database_specific_method_name, column.to_s, table.to_s
-      else
-
-        # try requiring 'activerecord-comments/[name-of-adapter]_adapter'
-        begin
-
-          # see if there right method exists after requiring
-          require "activerecord-comments/#{ adapter }_adapter"
-          if self.respond_to? database_specific_method_name
-            send database_specific_method_name, column.to_s, table.to_s
-          else
-            raise ActiveRecord::Comments::UnsupportedDatabase.new("#{adapter} unsupported by ActiveRecord::Comments")
-          end
-
-        rescue LoadError
-          raise ActiveRecord::Comments::UnsupportedDatabase.new("#{adapter} unsupported by ActiveRecord::Comments")
-        end
-      end
+      connection.column_comment column, table
     end
 
     # Extends ActiveRecord::Base#columns, setting @table_name as an instance variable 

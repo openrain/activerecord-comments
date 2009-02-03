@@ -81,11 +81,12 @@ while trying to use this gem in a project, i realized that i need a few addition
 
     conn = ActiveRecord::Base.connection
 
+    # DONE
     conn.comment 'users'
     conn.column_comment 'id', 'users'
-    conn.columns 'users'  # <--- columns should have table_name
 
-    # need an easy to to get / print all comments ... useful from rake tasks etc
+    # TODO
+    conn.columns 'users'  # <--- columns should have table_name
     ActiveRecord::Comments.table_comments
     ActiveRecord::Comments.print_comments
 

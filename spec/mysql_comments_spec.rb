@@ -83,10 +83,19 @@ describe ActiveRecord::Comments, 'MySQL' do
 
   describe 'Connection', 'extensions' do
     
-    it "Connection#comment(table) should return the database comment for a table that has a database comment" do
+    it "@connection#comment(table) should return the database comment for a table that has a database comment" do
       connection.execute "CREATE TABLE foxes( id INT NOT NULL AUTO_INCREMENT PRIMARY KEY ) COMMENT 'foxes Rule';"
       connection.comment('foxes').should == 'foxes Rule'
       connection.comment(:foxes).should == 'foxes Rule'
+    end
+
+    it "@connection.columns(table) should inject the table name to column objects"
+
+    it "@connection#column_comment should return the database comment for a column that has a database comment" do
+      connection.execute "CREATE TABLE foxes( id INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'i am the ID column' );"
+      connection.column_comment(:id, :foxes).should == 'i am the ID column'
+      connection.column_comment('id', :foxes).should == 'i am the ID column'
+      connection.column_comment('id', 'foxes').should == 'i am the ID column'
     end
 
   end
