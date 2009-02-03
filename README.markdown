@@ -91,6 +91,11 @@ while trying to use this gem in a project, i realized that i need a few addition
 
 these are not yet implemented!
 
+Future Ideas
+------------
+
+- create `db-doc` or (something) that provides a system for documenting your database schema, whether it be via .yml files or as database comments or whatever.  then make `activerecord-comments` an extension to that (basically just a different data store for your schema documentation).  there should always be a way to easily document your schema, regardless of whether or not your database(s) supports comments.  and, with or without database comments, there should be an easy way to see which tables/columns you have and haven't documented!
+
 
 [mysql_adapter]: http://github.com/remi/activerecord-comments/tree/master/lib/activerecord-comments/mysql_adapter.rb
 [mysql_spec]:    http://github.com/remi/activerecord-comments/tree/master/spec/mysql_comments_spec.rb
