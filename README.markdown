@@ -74,6 +74,19 @@ this, or you can add comments to your `CREATE TABLE` declarations ...
 
 for more MySQL examples, see [spec/mysql_comments_spec.rb][mysql_spec]
 
+TODO
+----
+
+while trying to use this gem in a project, i realized that i need a few additional public APIs:
+
+    conn = ActiveRecord::Base.connection
+
+    conn.comment 'users'
+    conn.column_comment 'id', 'users'
+    conn.columns 'users'  # <--- columns should have table_name
+
+these are not yet implemented!
+
 
 [mysql_adapter]: http://github.com/remi/activerecord-comments/tree/master/lib/activerecord-comments/mysql_adapter.rb
 [mysql_spec]:    http://github.com/remi/activerecord-comments/tree/master/spec/mysql_comments_spec.rb
