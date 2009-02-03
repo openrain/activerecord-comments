@@ -85,6 +85,10 @@ while trying to use this gem in a project, i realized that i need a few addition
     conn.column_comment 'id', 'users'
     conn.columns 'users'  # <--- columns should have table_name
 
+    # need an easy to to get / print all comments ... useful from rake tasks etc
+    ActiveRecord::Comments.table_comments
+    ActiveRecord::Comments.print_comments
+
 these are not yet implemented!
 
 
