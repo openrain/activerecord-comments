@@ -26,14 +26,11 @@ Usage
     >> ActiveRecord::Base.comment :foxes
     => "Represents a Fox, a creature that craves chunky bacon"
 
+    >> ActiveRecord::Base.connection.comment :foxes
+    => "Represents a Fox, a creature that craves chunky bacon"
+
     >> Fox.columns
     => [#<ActiveRecord::...>, #<ActiveRecord::...>]
-
-    >> Fox.column_names
-    => ["id", "name", "has_had_truck_stolen"]
-
-    >> Fox.column_comments
-    => ["Primary Key", "Fox's name", "Whether or not this Fox has had his/her truck stolen"]
 
     >> Fox.columns.first.name
     => "id"
@@ -45,6 +42,9 @@ Usage
     => "Primary Key"
 
     >> ActiveRecord::Base.column_comment :id, :foxes
+    => "Primary Key"
+
+    >> ActiveRecord::Base.connection.column_comment :id, :foxes
     => "Primary Key"
 
 
@@ -74,23 +74,6 @@ this, or you can add comments to your `CREATE TABLE` declarations ...
 
 for more MySQL examples, see [spec/mysql_comments_spec.rb][mysql_spec]
 
-TODO
-----
-
-while trying to use this gem in a project, i realized that i need a few additional public APIs:
-
-    conn = ActiveRecord::Base.connection
-
-    # DONE
-    conn.comment 'users'
-    conn.column_comment 'id', 'users'
-
-    # TODO
-    conn.columns 'users'  # <--- columns should have table_name
-    ActiveRecord::Comments.table_comments
-    ActiveRecord::Comments.print_comments
-
-these are not yet implemented!
 
 Future Ideas
 ------------

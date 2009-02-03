@@ -90,6 +90,7 @@ describe ActiveRecord::Comments, 'MySQL' do
     end
 
     it "@connection.columns(table) should inject the table name to column objects" do
+      pending "Not implementing this (for now?)"
       connection.execute "CREATE TABLE foxes( id INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'i am the ID column' );"
       connection.columns(:foxes).length.should == 1
       connection.columns(:foxes).first.name.should == 'id'
