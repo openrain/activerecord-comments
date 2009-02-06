@@ -9,7 +9,7 @@ begin
     s.name        = "activerecord-comments"
     s.summary     = "Provides an easy to access database table/column comments from ActiveRecord"
     s.email       = "remi@remitaylor.com"
-    s.homepage    = "http://github.com/remi/activerecord-comments"
+    s.homepage    = "http://github.com/openrain/activerecord-comments"
     s.description = "Provides an easy to access database table/column comments from ActiveRecord"
     s.authors     = %w( remi )
   end
