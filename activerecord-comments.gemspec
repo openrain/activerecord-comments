@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.email = %q{remi@remitaylor.com}
   s.files = ["VERSION.yml", "README.markdown", "lib/activerecord-comments", "lib/activerecord-comments/column_ext.rb", "lib/activerecord-comments/mysql_adapter.rb", "lib/activerecord-comments/abstract_adapter_ext.rb", "lib/activerecord-comments/base_ext.rb", "lib/activerecord-comments.rb", "spec/mysql_comments_spec.rb", "spec/spec_database.yml", "spec/spec_helper.rb"]
   s.has_rdoc = true
-  s.homepage = %q{http://github.com/remi/activerecord-comments}
+  s.homepage = %q{http://github.com/openrain/activerecord-comments}
   s.rdoc_options = ["--inline-source", "--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.1}
