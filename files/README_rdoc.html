@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: README.rdoc</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>README.rdoc</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>README.rdoc
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Wed Feb 11 11:04:53 -0700 2009</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1>activerecord-comments</h1>
+<p>
+Super-duper simple gem for getting table/column comments defined in the
+database.
+</p>
+<h2>Background</h2>
+<p>
+I wanted a way to easily get to the comments defined in the database, via
+<a href="../classes/ActiveRecord.html">ActiveRecord</a>. While the
+underlying implementation may change to become faster and more database
+agnostic, the public API should remain the same.
+</p>
+<h2>Install</h2>
+<pre>
+    $ sudo gem install remi-activerecord-comments -s http://gems.github.com
+</pre>
+<h2>Usage</h2>
+<pre>
+    &gt;&gt; require 'activerecord-comments'
+
+    &gt;&gt; Fox.comment
+    =&gt; &quot;Represents a Fox, a creature that craves chunky bacon&quot;
+
+    &gt;&gt; ActiveRecord::Base.comment :foxes
+    =&gt; &quot;Represents a Fox, a creature that craves chunky bacon&quot;
+
+    &gt;&gt; ActiveRecord::Base.connection.comment :foxes
+    =&gt; &quot;Represents a Fox, a creature that craves chunky bacon&quot;
+
+    &gt;&gt; Fox.columns
+    =&gt; [#&lt;ActiveRecord::...&gt;, #&lt;ActiveRecord::...&gt;]
+
+    &gt;&gt; Fox.columns.first.name
+    =&gt; &quot;id&quot;
+
+    &gt;&gt; Fox.columns.first.comment
+    =&gt; &quot;Primary Key&quot;
+
+    &gt;&gt; Fox.column_comment :id
+    =&gt; &quot;Primary Key&quot;
+
+    &gt;&gt; ActiveRecord::Base.column_comment :id, :foxes
+    =&gt; &quot;Primary Key&quot;
+
+    &gt;&gt; ActiveRecord::Base.connection.column_comment :id, :foxes
+    =&gt; &quot;Primary Key&quot;
+</pre>
+<h2>Database Support</h2>
+<p>
+For right now, I&#8216;m just supporting MySQL as it&#8216;s the only
+database I&#8216;m currently using that supports database comments.
+</p>
+<p>
+If you want to extend activerecord-comments to support comments for your
+favorite database, the gem is coded in such a way that it should be really
+easy to extend.
+</p>
+<p>
+See <a
+href="http://github.com/remi/activerecord-comments/tree/master/lib/activerecord-comments/mysql_adapter.rb">mysql_adapter.rb</a>
+for an example of the methods your database adapter needs to support (just
+`comment(table)` and `column_comment(column,table)`).
+</p>
+<h2>SQL</h2>
+<p>
+If you&#8216;re unsure how to add comments to your MySQL tables/columns,
+most MySQL GUIs support this, or you can add comments to your `CREATE
+TABLE` declarations &#8230;
+</p>
+<pre>
+    CREATE TABLE foo (
+      id INT COMMENT 'i am the primary key',
+      foo VARCHAR(100) COMMENT 'foo!'
+    ) COMMENT 'this table rocks'
+</pre>
+<p>
+for more MySQL examples, see <a
+href="http://github.com/remi/activerecord-comments/tree/master/spec/mysql_comments_spec.rb">spec/mysql_comments_spec.rb</a>
+</p>
+<h2>Future Ideas</h2>
+<ul>
+<li>create `db-doc` or (something) that provides a system for documenting your
+database schema, whether it be via .yml files or as database comments or
+whatever. then make `activerecord-comments` an extension to that (basically
+just a different data store for your schema documentation). there should
+always be a way to easily document your schema, regardless of whether or
+not your database(s) supports comments. and, with or without database
+comments, there should be an easy way to see which tables/columns you have
+and haven&#8216;t documented!
+
+</li>
+</ul>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
