@@ -8,6 +8,10 @@ I wanted a way to easily get to the comments defined in the database, via Active
 While the underlying implementation may change to become faster and more database agnostic, 
 the public API should remain the same.
 
+== Documentation
+
+Read the RDoc[http://openrain.github.com/activerecord-comments]
+
 == Install
 
     $ sudo gem install remi-activerecord-comments -s http://gems.github.com
