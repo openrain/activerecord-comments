@@ -7,8 +7,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |s|
     s.name        = "activerecord-comments"
-    s.summary     = "Provides an easy to access database table/column comments from ActiveRecord"
-    s.email       = "remi@remitaylor.com"
+    s.summary     = "Access DB comments from ActiveRecord"
+    s.email       = "remi.taylor@openrain.com"
     s.homepage    = "http://github.com/openrain/activerecord-comments"
     s.description = "Provides an easy to access database table/column comments from ActiveRecord"
     s.authors     = %w( remi )
